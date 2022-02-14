@@ -1,8 +1,9 @@
-require 'rack'
-require 'rack/unreloader'
-require 'thin'
 require 'json'
 require 'pry'
+require 'rack'
+require 'rack/unreloader'
+require 'singleton'
+require 'thin'
 
 Dir['config/**/*.rb'].each { |f| require "./#{f}" }
 Dir['app/**/*.rb'].each { |f| require "./#{f}" }

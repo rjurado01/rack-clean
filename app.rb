@@ -6,22 +6,24 @@ class ValidateError < StandardError
   end
 end
 
+class UnauthorizedError < StandardError; end
+class NotFoundError < StandardError; end
+
 class App
   def call(env)
     req = Rack::Request.new(env)
 
     if req.path_info == '/users' && req.get?
-      users = Accounts::ListUsersService.new.run
-
-      [200, {'Content-Type' => 'application/json'}, users.to_json]
+      Accounts::Users::ListController.new.run(req)
     elsif req.path_info == '/users' && req.post?
-      params = JSON.parse(req.body.read, symbolize_names: true)
-      result = Accounts::CreateUserService.new.run(params)
-
-      [201, {'Content-Type' => 'application/json'}, result]
+      Accounts::Users::CreateController.new.run(req)
     else
       [200, {'Content-Type' => 'text/plain'}, "Hello from Rack 3: #{env}"]
     end
+  rescue UnauthorizedError
+    [403]
+  rescue NotFoundError
+    [404]
   rescue ValidateError => e
     [422, {'Content-Type' => 'application/json'}, e.message]
   end

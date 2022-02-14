@@ -1,5 +1,3 @@
-require 'singleton'
-
 class InMemoryDb
   include Singleton
 

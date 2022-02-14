@@ -9,10 +9,21 @@ module I
     # CONNECTION = PG.connect(dbname: NAME, port: PORT, host: HOST)
   end
 
-  module User
-    ENTITY = UserEntity
-    # Repository = -> { ::UserInMemoryRepository.instance }
-    Repository = -> { ::Accounts::UserPgRepository.new }
+  module Global
+    ListDtoMapper = -> { ::Global::ListDtoMapper.new }
+    Authenticate = -> { ::Global::Authenticate.new }
+  end
+
+  module Accounts
+    module Users
+      ENTITY = ::Accounts::Users::Entity
+      POLICY = ::Accounts::Users::Policy
+      REPRESENTATION = ::Accounts::Users::Representation
+
+      ListService = -> { ::Accounts::Users::ListService.new }
+      Repository = -> { ::Accounts::Users::PgRepository.new }
+      # Repository = -> { ::UserInMemoryRepository.instance }
+    end
   end
 end
 

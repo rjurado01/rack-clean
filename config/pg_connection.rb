@@ -1,5 +1,4 @@
 require 'pg'
-require 'singleton'
 
 class PgConnection
   include Singleton
