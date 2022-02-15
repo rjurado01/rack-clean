@@ -4,9 +4,9 @@ module Accounts
       def initialize(
         authenticate = I::Global::Authenticate.call,
         dto_mapper = I::Global::ListDtoMapper.call,
-        policy = I::Accounts::Users::POLICY,
+        policy = I::Accounts::Users::Policy.call,
         service = I::Accounts::Users::ListService.call,
-        representation = I::Accounts::Users::REPRESENTATION
+        representation = I::Accounts::Users::Representation.call
       )
         @authenticate = authenticate
         @dto_mapper = dto_mapper

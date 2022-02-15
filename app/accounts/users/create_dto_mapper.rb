@@ -1,6 +1,6 @@
 module Accounts
   module Users
-    CreateDto = Sruct.new(
+    CreateDto = Struct.new(
       :company_id,
       :current_user_id,
       :params

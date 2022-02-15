@@ -9,6 +9,12 @@ module I
     # CONNECTION = PG.connect(dbname: NAME, port: PORT, host: HOST)
   end
 
+  module Sequel
+    Connection = lambda {
+      ::Sequel.connect('postgres://rjurado@localhost:5432/meka_erp_development')
+    }
+  end
+
   module Global
     ListDtoMapper = -> { ::Global::ListDtoMapper.new }
     Authenticate = -> { ::Global::Authenticate.new }
@@ -17,11 +23,11 @@ module I
   module Accounts
     module Users
       ENTITY = ::Accounts::Users::Entity
-      POLICY = ::Accounts::Users::Policy
-      REPRESENTATION = ::Accounts::Users::Representation
 
       ListService = -> { ::Accounts::Users::ListService.new }
-      Repository = -> { ::Accounts::Users::PgRepository.new }
+      Repository = -> { ::Accounts::Users::SequelRepository.new }
+      Policy = -> { ::Accounts::Users::Policy }
+      Representation = -> { ::Accounts::Users::Representation }
       # Repository = -> { ::UserInMemoryRepository.instance }
     end
   end

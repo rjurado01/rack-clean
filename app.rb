@@ -9,6 +9,8 @@ end
 class UnauthorizedError < StandardError; end
 class NotFoundError < StandardError; end
 
+# binding.pry
+
 class App
   def call(env)
     req = Rack::Request.new(env)
@@ -21,9 +23,9 @@ class App
       [200, {'Content-Type' => 'text/plain'}, "Hello from Rack 3: #{env}"]
     end
   rescue UnauthorizedError
-    [403]
+    [403, nil, '']
   rescue NotFoundError
-    [404]
+    [404, nil, '']
   rescue ValidateError => e
     [422, {'Content-Type' => 'application/json'}, e.message]
   end

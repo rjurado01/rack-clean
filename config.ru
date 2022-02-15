@@ -3,6 +3,7 @@ require 'pry'
 require 'rack'
 require 'rack/unreloader'
 require 'singleton'
+require 'sequel'
 require 'thin'
 
 Dir['config/**/*.rb'].each { |f| require "./#{f}" }

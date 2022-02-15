@@ -10,7 +10,9 @@ module Accounts
       end
 
       def find(id)
-        user = @connection.exec("SELECT id, name, email FROM users WHERE id = #{id} LIMIT 1").first
+        user = @connection.exec(
+          "SELECT id, name, email, company_id FROM users WHERE id = #{id} LIMIT 1"
+        ).first
 
         raise NotFoundError unless user
 
@@ -18,7 +20,15 @@ module Accounts
       end
 
       def list(_params)
-        @connection.exec('SELECT id, name, email FROM users').map { @entity_klass.new(_1) }
+        @connection.exec(
+          'SELECT id, name, email, company_id FROM users'
+        ).map { @entity_klass.new(_1) }
+      end
+
+      def list_by_company(company_id, _filters, _order, _page)
+        @connection.exec(
+          "SELECT id, name, email, company_id FROM users WHERE company_id = #{company_id}"
+        ).map { @entity_klass.new(_1) }
       end
 
       def create(entity)

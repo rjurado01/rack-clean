@@ -5,8 +5,13 @@ module Accounts
         @repository = repository
       end
 
-      def run(params = {})
-        @repository.list(params)
+      def run(dto)
+        @repository.list_by_company(
+          dto.company_id,
+          dto.filters,
+          dto.order,
+          dto.page
+        )
       end
     end
   end

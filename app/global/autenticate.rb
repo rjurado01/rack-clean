@@ -6,7 +6,7 @@ module Global
 
     def run(_req)
       # TODO cargar el usuario del jwt
-      @user_repository.find(1)
+      @user_repository.find_with_role(1)
     end
   end
 end

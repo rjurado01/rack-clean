@@ -4,6 +4,7 @@ module Accounts
       :id,
       :name,
       :email,
+      :role,
       :created_at,
       :updated_at,
       :company_id,

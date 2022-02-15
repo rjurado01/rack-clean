@@ -1,7 +1,8 @@
 module Global
   ListDto = Struct.new(
+    :user_id,
+    :user_role,
     :company_id,
-    :current_user_id,
     :filters,
     :page,
     :order
@@ -10,8 +11,9 @@ module Global
   class ListDtoMapper
     def run(current_user, req)
       ListDto.new(
-        current_user.company_id,
         current_user.id,
+        current_user.role,
+        current_user.company_id,
         req.params['filter'],
         req.params['page'],
         req.params['order']
