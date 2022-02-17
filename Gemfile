@@ -2,6 +2,9 @@
 
 source 'https://rubygems.org'
 
+gem 'dry-struct'
+gem 'dry-schema'
+
 gem 'pg'
 gem 'pry'
 gem 'rack'

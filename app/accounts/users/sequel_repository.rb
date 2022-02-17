@@ -10,46 +10,17 @@ module Accounts
       end
 
       def find(id)
-        user = @connection.from(:users)
-                 .select(:id, :name, :email, :company_id)
-                 .where(id: id)
-                 .first
+        user = base_query.where(users[:id] => id).first
 
         @entity_klass.new(user)
       end
 
-      def find_with_role(id)
-        users = Sequel[:users]
-        roles = Sequel[:roles]
+      def list(filters, _order, _page)
+        query = base_query
 
-        user = @connection.from(:users)
-                 .select(
-                   users[:id],
-                   users[:name],
-                   users[:email],
-                   users[:company_id],
-                   roles[:name].as(:role)
-                 )
-                 .join(:roles, id: :role_id)
-                 .where(users[:id] => id)
-                 .first
+        query = query.where(users[:company_id] => filters[:company_id]) if filters[:company_id]
 
-        @entity_klass.new(user)
-      end
-
-      def list(_params)
-        @connection
-          .from(:users)
-          .select(:id, :name, :email, :company_id)
-          .map { @entity_klass.new(_1) }
-      end
-
-      def list_by_company(company_id, _filters, _order, _page)
-        @connection
-          .from(:users)
-          .select(:id, :name, :email, :company_id)
-          .where(company_id: company_id)
-          .map { @entity_klass.new(_1) }
+        query.map { @entity_klass.new(_1) }
       end
 
       def create(entity)
@@ -67,6 +38,31 @@ module Accounts
         values = values.map { "'#{_1}'" }.join(',')
 
         @connection.exec("INSERT INTO users (#{fields}) VALUES (#{values})")
+      end
+
+      private
+
+      def users
+        Sequel[:users]
+      end
+
+      def roles
+        Sequel[:roles]
+      end
+
+      def base_query
+        @connection
+          .from(:users)
+          .select(
+            users[:id],
+            users[:name],
+            users[:email],
+            users[:created_at],
+            users[:updated_at],
+            users[:company_id],
+            roles[:name].as(:role)
+          )
+          .join(:roles, id: :role_id)
       end
     end
   end
