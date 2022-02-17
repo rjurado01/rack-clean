@@ -24,20 +24,7 @@ module Accounts
       end
 
       def create(entity)
-        fields = []
-        values = []
-
-        entity.each_pair do |name, value|
-          next unless value
-
-          fields.push(name)
-          values.push(value)
-        end
-
-        fields = fields.join(',')
-        values = values.map { "'#{_1}'" }.join(',')
-
-        @connection.exec("INSERT INTO users (#{fields}) VALUES (#{values})")
+        @connection.from(:users).insert(entity.attributes)
       end
 
       private
