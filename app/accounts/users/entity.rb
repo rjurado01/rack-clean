@@ -1,6 +1,6 @@
 module Accounts
   module Users
-    class Entity < Dry::Struct
+    class Entity < Global::Entity
       attribute :id, Types::Integer
       attribute :name, Types::String
       attribute :email, Types::String

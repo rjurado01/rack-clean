@@ -12,7 +12,7 @@ module Accounts
       def find(id)
         user = base_query.where(users[:id] => id).first
 
-        @entity_klass.new(user)
+        @entity_klass.load(user)
       end
 
       def list(filters, _order, _page)
@@ -20,7 +20,7 @@ module Accounts
 
         query = query.where(users[:company_id] => filters[:company_id]) if filters[:company_id]
 
-        query.map { @entity_klass.new(_1) }
+        query.map { @entity_klass.load(_1) }
       end
 
       def create(entity)

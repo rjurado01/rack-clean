@@ -14,7 +14,8 @@ module Types
 end
 
 Dir['config/**/*.rb'].each { |f| require "./#{f}" }
-Dir['app/**/*.rb'].each { |f| require "./#{f}" }
+Dir['app/global/*.rb'].each { |f| require "./#{f}" }
+Dir['app/**/*.rb'].each { |f| require "./#{f}" unless f.match?('global') }
 
 require './app'
 
