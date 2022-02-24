@@ -12,6 +12,15 @@ module Accounts
 
         raise UnauthorizedError
       end
+
+      def invite(dto)
+        return if
+          dto.current_user &&
+          dto.current_user.company_id === dto.company_id &&
+          dto.current_user.role == 'Administrador'
+
+        raise UnauthorizedError
+      end
     end
   end
 end

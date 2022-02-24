@@ -9,7 +9,7 @@ end
 class UnauthorizedError < StandardError; end
 class NotFoundError < StandardError; end
 
-# binding.pry
+I::Db::Connection.call # initialize DB
 
 class App
   def call(env)
@@ -17,8 +17,8 @@ class App
 
     if req.path_info == '/users' && req.get?
       Accounts::Users::ListController.new.run(req)
-    elsif req.path_info == '/users' && req.post?
-      Accounts::Users::CreateController.new.run(req)
+    elsif req.path_info == '/invitations' && req.post?
+      Accounts::Users::InviteController.new.run(req)
     else
       [200, {'Content-Type' => 'text/plain'}, "Hello from Rack 3: #{env}"]
     end

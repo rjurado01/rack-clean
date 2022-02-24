@@ -2,7 +2,7 @@ module Accounts
   module Users
     class SequelRepository
       def initialize(
-        connection = I::Sequel::Connection.call,
+        connection = I::Db::Connection.call,
         entity_klass = I::Accounts::Users::ENTITY
       )
         @connection = connection

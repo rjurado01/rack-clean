@@ -8,6 +8,7 @@ require 'thin'
 
 require 'dry-types'
 require 'dry-struct'
+require 'dry-schema'
 
 module Types
   include Dry.Types()

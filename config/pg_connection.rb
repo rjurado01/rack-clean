@@ -4,7 +4,7 @@ class PgConnection
   include Singleton
 
   def initialize(dbname = I::Pg::NAME, port: I::Pg::PORT, host: I::Pg::HOST)
-    @connection = PG.connect(dbname: dbname, port: port, host: host)
+    @connection = PG.connect(dbname:, port:, host:)
   end
 
   def exec(query)
