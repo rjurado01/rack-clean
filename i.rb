@@ -1,6 +1,6 @@
 module I
   module Db
-    NAME = 'meka_erp_development'.freeze
+    NAME = 'rack_clean'.freeze
     HOST = 'localhost'.freeze
     PORT = 5432
 
@@ -25,7 +25,6 @@ module I
 
       Repository = -> { ::Accounts::Users::SequelRepository.new }
       Policy = -> { ::Accounts::Users::Policy }
-      Representation = -> { ::Accounts::Users::Representation }
       # Repository = -> { ::UserInMemoryRepository.instance }
     end
   end

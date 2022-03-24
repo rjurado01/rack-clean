@@ -19,7 +19,7 @@ module Accounts
         items = dto.emails.map do |email|
           {
             unconfirmed_email: email,
-            role: dto.role,
+            role_id: dto.role_id,
             created_at: Time.now,
             updated_at: Time.now
           }
@@ -27,7 +27,7 @@ module Accounts
 
         raise(@validate_error_klass, @errors) unless validate(items)
 
-        @repository.bulk_create(entity)
+        @repository.bulk_invite(items)
 
         true
       end

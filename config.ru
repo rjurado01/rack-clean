@@ -15,8 +15,8 @@ module Types
 end
 
 Dir['config/**/*.rb'].each { |f| require "./#{f}" }
-Dir['app/global/*.rb'].each { |f| require "./#{f}" }
-Dir['app/**/*.rb'].each { |f| require "./#{f}" unless f.match?('global') }
+Dir['modules/global/*.rb'].each { |f| require "./#{f}" }
+Dir['modules/**/*.rb'].each { |f| require "./#{f}" unless f.match?('global') }
 
 require './app'
 
@@ -24,6 +24,6 @@ Unreloader = Rack::Unreloader.new { App.new }
 
 Unreloader.require './app.rb'
 
-Dir['app/**/*.rb'].each { |f| Unreloader.require "./#{f}" }
+Dir['modules/**/*.rb'].each { |f| Unreloader.require "./#{f}" }
 
 Rack::Handler::Thin.run Unreloader

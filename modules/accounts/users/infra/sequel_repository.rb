@@ -27,6 +27,12 @@ module Accounts
         @connection.from(:users).insert(entity.attributes)
       end
 
+      def bulk_invite(entities)
+        @connection.conn.transaction do
+          entities.each { |e| @connection.from(:users).insert(e) }
+        end
+      end
+
       private
 
       def users
